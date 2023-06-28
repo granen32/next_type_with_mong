@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 const MONGGO_DATA_URL = process.env.NEXT_PUBLIC_MONGO_DB_URL;
-let connectDB;
+let connectDB: Promise<MongoClient>;
 if (process.env.NODE_ENV === 'development') {
   if (!global._mongo) {
     global._mongo = new MongoClient(MONGGO_DATA_URL).connect();
