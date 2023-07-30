@@ -1,21 +1,19 @@
-import React from 'react';
-const page = () => {
+import { connectDB } from "@/util/database";
+import tw from "twin.macro";
+export default async function List() {
+  const db = (await connectDB).db("forum");
+  const result = await db.collection("post").find().toArray();
+  console.log(result);
   return (
-    <div className="list-bg">
-      <div className="list-item">
-        <h4>글제목</h4>
-        <p>1월 1일</p>
-      </div>
-      <div className="list-item">
-        <h4>글제목</h4>
-        <p>1월 1일</p>
-      </div>
-      <div className="list-item">
-        <h4>글제목</h4>
-        <p>1월 1일</p>
-      </div>
+    <div tw="">
+      {result.map((el, index) => (
+        <>
+          <div className="list-item" key={index}>
+            <h4>{el.title}</h4>
+            <p>{el.content}</p>
+          </div>
+        </>
+      ))}
     </div>
   );
-};
-
-export default page;
+}
